@@ -1,0 +1,16 @@
+apply plugin: 'java-library'
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.google.guava:guava:22.0-android'
+    compile 'org.json:json:20160212'
+    testCompile 'junit:junit:4.12'
+}
+
+
