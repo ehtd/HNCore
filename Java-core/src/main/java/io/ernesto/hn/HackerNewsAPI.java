@@ -21,15 +21,16 @@ public class HackerNewsAPI {
     private String jobStoriesPath = "jobstories.json";
 
 
-    private ContentProvider provider;
+    private ContentProvider topProvider;
 
     public HackerNewsAPI() {
-        this.provider = new ContentProvider(this.baseURL, this.topStoriesPath);
+        this.topProvider = new ContentProvider(this.baseURL, this.topStoriesPath);
     }
 
     public @Nullable
-    Story[] fetch() {
-        return provider.getStories();
+    Story[] fetchTopStories() {
+        Story[] storyIds = topProvider.getStories();
+        return storyIds;
     }
 
     public void next() {

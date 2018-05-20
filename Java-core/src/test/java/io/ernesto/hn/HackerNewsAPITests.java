@@ -14,7 +14,7 @@ public class HackerNewsAPITests {
     public void testFetchingIDList() {
         HackerNewsAPI api = new HackerNewsAPI();
 
-        Story[] stories = api.fetch();
+        Story[] stories = api.fetchTopStories();
         assertTrue(stories != null);
         // TODO: improve
         System.out.print(stories);

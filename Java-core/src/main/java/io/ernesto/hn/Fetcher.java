@@ -17,7 +17,7 @@ public class Fetcher {
     }
 
     @ObjectiveCName("fetchURLSegment:")
-    public String fetchURLSegment(String segment) {
+    public @javax.annotation.Nullable String fetchURLSegment(String segment) {
         HttpURLConnection connection = null;
         BufferedReader reader = null;
 

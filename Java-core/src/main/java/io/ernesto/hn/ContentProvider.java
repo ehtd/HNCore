@@ -14,10 +14,13 @@ import org.json.JSONException;
  */
 
 public class ContentProvider {
+    private static int timeout = 5000;
     private Fetcher listFetcher;
     private String contentPath;
+    private String baseURL;
 
     public ContentProvider(String baseURL, String contentPath) {
+        this.baseURL = baseURL;
         this.listFetcher = new Fetcher(baseURL);
         this.contentPath = contentPath;
     }
@@ -37,7 +40,7 @@ public class ContentProvider {
         executor.submit(future);
 
         try {
-            String response = future.get(5000, TimeUnit.MILLISECONDS);
+            String response = future.get(ContentProvider.timeout, TimeUnit.MILLISECONDS);
             if (response != null) {
                 JSONArray storyIdList = new JSONArray(response);
                 return storyIdList;
@@ -48,6 +51,21 @@ public class ContentProvider {
         }
 
         return null;
+    }
+
+    public Story getStory(String storyId) {
+        final String contentPath = "item/" + storyId + ".json";
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+
+        FutureTask<String> future =
+                new FutureTask<String>(new Callable<String>() {
+                    @Override
+                    public String call() throws Exception {
+                        return listFetcher.fetchURLSegment(contentPath);
+                    }
+                });
+
+        executor.submit(future);
     }
 
     public @javax.annotation.Nullable Story[] getStories() {
